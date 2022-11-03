@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "636473828942",
+    "project_id": "phone-no-login-app",
+    "storage_bucket": "phone-no-login-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636473828942:android:b1793ba94fe240d6e9851f",
+        "android_client_info": {
+          "package_name": "com.example.phone_login_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636473828942-bs7aggejhc8dtmj4ra4fbh4mvpjer13o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDZ9BeCSgjxZIqfIyBfYeedW6iVDJeWM8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636473828942-bs7aggejhc8dtmj4ra4fbh4mvpjer13o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
