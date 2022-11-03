@@ -78,7 +78,7 @@ class _OtpScreenState extends State<OtpScreen> {
               Get.off(() =>
                   ProfileScreen()); //Go to the profile screen after OTP verifiation
             } catch (e) {
-              print('Wrong OTP');
+              Get.snackbar('Wrong OTP', 'Please enter correct OTP');
             }
           },
           child: const Text(
