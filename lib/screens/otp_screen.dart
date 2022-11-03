@@ -47,7 +47,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 Pinput(
                   length: 6,
                   showCursor: true,
-                  onCompleted: (pin) => print(pin),
+                  // onCompleted: (pin) => print(pin),
                   onChanged: (value) => {OTP = value},
                 ),
                 submitButton(context)

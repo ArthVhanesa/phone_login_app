@@ -122,7 +122,7 @@ class _LogInScreenState extends State<LogInScreen> {
               verificationFailed: (FirebaseAuthException e) {},
               codeSent: (String verificationId, int? resendToken) {
                 LogInScreen.verifyID = verificationId;
-                Get.to(() => OtpScreen());
+                Get.to(() => const OtpScreen());
               },
               codeAutoRetrievalTimeout: (String verificationId) {},
             );
