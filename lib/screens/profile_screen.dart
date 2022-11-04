@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:phone_login_app/screens/home_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -16,12 +17,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  int selectedIndex = 1;
   TextEditingController nameController = TextEditingController();
   DateTime date = DateTime.now();
   File? image;
   String imgUrl = '';
-  String gender = '';
 
+// List of Gender
+  List<String> genderList = ['Male', 'Female', '⚧'];
+
+// Functon for sending user data to Firebase Firestore
   sendData() async {
     var storageImg = FirebaseStorage.instance.ref().child(image!.path);
     var task = storageImg.putFile(image!);
@@ -31,11 +36,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     await FirebaseFirestore.instance.collection("users").add({
       'name': nameController.text,
       'img': imgUrl,
-      'gender': gender,
+      'gender': genderList[selectedIndex].toString(),
       'dob': date
     });
   }
 
+// Function for get image from phone
   Future getImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
@@ -58,51 +64,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                InkWell(
-                  onTap: () => {
-                    showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(15))),
-                      builder: (context) => modalBottomSheet(),
-                    )
-                  },
-                  child: image != null
-                      ? CircleAvatar(
-                          radius: 70,
-                          foregroundImage: FileImage(image!),
-                        )
-                      : const CircleAvatar(
-                          radius: 70,
-                          foregroundImage: AssetImage('assets/profile.webp'),
-                        ),
-                ),
-                Container(
-                  height: 55,
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.person_outline),
-                      const SizedBox(width: 10),
-                      Expanded(
-                          child: TextField(
-                        controller: nameController,
-                        onChanged: (value) {},
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Name",
-                        ),
-                      ))
-                    ],
-                  ),
-                ),
+                profileImage(context),
+                nameField(),
                 Container(
                   height: 55,
                   padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -138,6 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
+                genderSelector(),
                 submitButton(context)
               ],
             ),
@@ -147,6 +111,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Container nameField() {
+    return Container(
+      height: 55,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade300,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.person_outline),
+          const SizedBox(width: 10),
+          Expanded(
+              child: TextField(
+            controller: nameController,
+            onChanged: (value) {},
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              hintText: "Name",
+            ),
+          ))
+        ],
+      ),
+    );
+  }
+
+  InkWell profileImage(BuildContext context) {
+    return InkWell(
+      onTap: () => {
+        showModalBottomSheet(
+          isScrollControlled: true,
+          context: context,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
+          builder: (context) => modalBottomSheet(),
+        )
+      },
+      child: image != null
+          ? CircleAvatar(
+              radius: 70,
+              foregroundImage: FileImage(image!),
+            )
+          : const CircleAvatar(
+              radius: 70,
+              foregroundImage: AssetImage('assets/profile.webp'),
+            ),
+    );
+  }
+
+// Gender Selector
+  Wrap genderSelector() {
+    return Wrap(
+      direction: Axis.horizontal,
+      children: List.generate(genderList.length, (index) {
+        return InkWell(
+          onTap: () {
+            setState(() {
+              selectedIndex = index;
+            });
+            // print(selectedIndex);
+          },
+          child: Container(
+            margin: const EdgeInsets.all(10),
+            height: 45,
+            width: 80,
+            decoration: BoxDecoration(
+              color: selectedIndex == index
+                  ? const Color(0xFFd5715b)
+                  : Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Text(
+                genderList[index].toString(),
+                style: TextStyle(
+                  color: selectedIndex == index
+                      ? Colors.white
+                      : const Color(0xFFd5715b),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+
+// Submit Button
   SizedBox submitButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
@@ -157,7 +212,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50))),
           onPressed: () async {
-            // sendData();
+            sendData();
+            Get.off(() => const HomeScreen());
           },
           child: const Text(
             "Submit",
@@ -166,6 +222,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+// Modal bottom for Image selector
   Container modalBottomSheet() {
     return Container(
       height: 150,
@@ -181,6 +238,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+// Image picker option (Camera/Gallery)
   InkWell imagePickerOption(String name, ImageSource source, IconData icon) {
     return InkWell(
       onTap: () => getImage(source),
@@ -189,10 +247,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Row(
           children: [
             Icon(icon),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Text(
               name,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             )
           ],
         ),
