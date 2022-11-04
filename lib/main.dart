@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:phone_login_app/controllers/internet_status_controller.dart';
+import 'package:phone_login_app/screens/home_screen.dart';
 import 'package:phone_login_app/screens/login_screen.dart';
 
 void main() async {
@@ -23,6 +24,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const LogInScreen());
+        home: const HomeScreen());
   }
 }

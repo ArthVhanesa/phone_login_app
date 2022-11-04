@@ -213,7 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   borderRadius: BorderRadius.circular(50))),
           onPressed: () async {
             sendData();
-            Get.off(() => const HomeScreen());
+            Get.off(() => HomeScreen());
           },
           child: const Text(
             "Submit",
