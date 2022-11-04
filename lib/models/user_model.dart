@@ -1,35 +1,30 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
-class GetUserName extends StatelessWidget {
-  final String documentId;
+class User {
+  String? name;
+  DateTime? dob;
+  String? img;
+  String? gender;
 
-  GetUserName({required this.documentId});
+  User({
+    this.name,
+    this.dob,
+    this.img,
+    this.gender,
+  });
 
-  @override
-  Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+  static User fromJson(Map<String, dynamic> json) => User(
+        name: json['name'],
+        dob: (json['dob'] as Timestamp).toDate(),
+        img: json['img'],
+        gender: json['gender'],
+      );
 
-    return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(documentId).get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
-        }
-
-        if (snapshot.hasData && !snapshot.data!.exists) {
-          return Text("Document does not exist");
-        }
-
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
-          return Text("Full Name: ${data['name']} ${data['dob']}");
-        }
-
-        return Text("loading");
-      },
-    );
-  }
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'dob': dob,
+        'img': img,
+        'gender': gender,
+      };
 }

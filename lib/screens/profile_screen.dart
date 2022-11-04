@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:phone_login_app/screens/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -17,16 +17,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  int selectedIndex = 1;
+  int selectedIndex = 0;
   TextEditingController nameController = TextEditingController();
   DateTime date = DateTime.now();
   File? image;
   String imgUrl = '';
 
-// List of Gender
+  // List of Gender
   List<String> genderList = ['Male', 'Female', '⚧'];
 
-// Functon for sending user data to Firebase Firestore
+  // Functon for sending user data to Firebase Firestore
   sendData() async {
     var storageImg = FirebaseStorage.instance.ref().child(image!.path);
     var task = storageImg.putFile(image!);
@@ -41,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-// Function for get image from phone
+  // Function for get image from phone
   Future getImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
@@ -56,6 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -161,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-// Gender Selector
+  // Gender Selector
   Wrap genderSelector() {
     return Wrap(
       direction: Axis.horizontal,
@@ -201,7 +202,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-// Submit Button
+  // Submit Button
   SizedBox submitButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
@@ -213,7 +214,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   borderRadius: BorderRadius.circular(50))),
           onPressed: () async {
             sendData();
-            Get.off(() => HomeScreen());
+            final prefs = await SharedPreferences.getInstance();
+            prefs.setBool('showHome', true);
+            Get.off(() => const HomeScreen());
           },
           child: const Text(
             "Submit",
@@ -222,7 +225,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-// Modal bottom for Image selector
+  // Modal bottom for Image selector
   Container modalBottomSheet() {
     return Container(
       height: 150,
@@ -238,7 +241,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-// Image picker option (Camera/Gallery)
+  // Image picker option (Camera/Gallery)
   InkWell imagePickerOption(String name, ImageSource source, IconData icon) {
     return InkWell(
       onTap: () => getImage(source),
