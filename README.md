@@ -6,7 +6,7 @@
 ## Screenshots 📱
 
 <p align="left"> 
-<img width="500" alt="Project Screenshot-1" src="https://user-images.githubusercontent.com/77712031/200154066-354b6adb-fecc-4cc0-a7e7-48f973001ab5.jpg">
+<img width="150" alt="Project Screenshot-1" src="https://user-images.githubusercontent.com/77712031/200154066-354b6adb-fecc-4cc0-a7e7-48f973001ab5.jpg">
 <br/>
 <img width="150" alt="Project Screenshot-2" src="https://user-images.githubusercontent.com/77712031/200154072-2260dfcd-e351-4ee4-914d-859209badfee.jpg">
 <img width="150" alt="Project Screenshot-3" src="https://user-images.githubusercontent.com/77712031/200154084-7545b898-7e0c-41c3-a641-243ff2ef9b86.jpg">
@@ -56,10 +56,3 @@ Hi and nice to meet you! 🚀
 <!-- Instagram -->
 <a href="https://instagram.com/arth.vhanesa" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="arth.vhanesa" height="30" width="40" /></a>
 </p>
-
-
-
-![Screenshot_2022_11_06_09_38_57_04_5017a2755511809b9e1fbda49b71d51f](https://user-images.githubusercontent.com/77712031/200154066-354b6adb-fecc-4cc0-a7e7-48f973001ab5.jpg)
-![Screenshot_2022_11_06_09_39_24_99_5017a2755511809b9e1fbda49b71d51f](https://user-images.githubusercontent.com/77712031/200154072-2260dfcd-e351-4ee4-914d-859209badfee.jpg)
-![Screenshot_2022_11_06_09_39_33_08_5017a2755511809b9e1fbda49b71d51f](https://user-images.githubusercontent.com/77712031/200154084-7545b898-7e0c-41c3-a641-243ff2ef9b86.jpg)
-![Screenshot_2022_11_06_09_39_35_66_5017a2755511809b9e1fbda49b71d51f](https://user-images.githubusercontent.com/77712031/200154087-dc8dc5c5-8985-48a3-8ec0-5314c00b7c20.jpg)
